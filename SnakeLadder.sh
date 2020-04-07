@@ -1,46 +1,49 @@
 echo "Welcome to Snake and Ladder simulator"
-
+#Constants
 INITIAL_POSITION=0
+WINNING_POSITION=100
 NO_PLAY=0
 SNAKE=1
 LADDER=2
-
+#Variables
 player=1
 playerPosition=$INITIAL_POSITION
-
 function game(){
+	dieNum=$(( RANDOM % 6 + 1))
+	option=$(( RANDOM % 3 ))
 
-        dieNum=$(( RANDOM % 6 + 1))
-        option=$(( RANDOM % 3 ))
-
-        case $option in
-        $NO_PLAY)
-                playerPosition=$(( playerPosition + 0 ))
-                echo "No Play you can stays in this"
-                ;;
-        $SNAKE)
+	case $option in
+	$NO_PLAY)
+		playerPosition=$(( playerPosition + $NO_PLAY ))
+		;;
+	$SNAKE)
                 playerPosition=$(( playerPosition - dieNum ))
-                echo "Snake-player moves behind by $dieNum received on the die"
-                ;;
-        $LADDER)
-                playerPosition=$(( playerPosition + dieNum ))
-                echo "Ladder-player moves ahead by $dieNum received on the die"
-                ;;
-        esac
+		;;
+	$LADDER)
+		if [ $(( playerPosition+dieNum )) -gt $WINNING_POSITION ]
+		then
+			playerPosition=$(( playerPosition-dieNum ))
+		else
+                	playerPosition=$(( playerPosition + dieNum ))
+		fi
+		;;
+	esac
 }
-function checkWinningPosition(){
- while ( true )
-        do game
-                if [ $playerPosition -eq 100 ]
-                then
-                        break
-                elif [ $playerPosition -lt 0 ]
-                then
-                        playerPosition=0
-                fi
-        done
+function checkoutWin()
+{
+	while ( true )
+        do  game	
+                if [ $playerPosition -eq $WINNING_POSITION ]
+		then
+			break
+		elif [ $playerPosition -lt $INITIAL_POSITION ]
+		then
+			playerPosition=$INITIAL_POSITION
+		fi
+	done
 }
-checkWinningPosition
+#Main
+checkoutWin
 echo "position - $playerPosition"
 
 
