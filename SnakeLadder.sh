@@ -29,7 +29,6 @@ function game(){
         esac
 }
 function checkWinningPosition(){
-
  while ( true )
         do game
                 if [ $playerPosition -eq 100 ]
