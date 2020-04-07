@@ -31,8 +31,7 @@ function game(){
 function checkWinningPosition(){
 
  while ( true )
-        do
-        game
+        do game
                 if [ $playerPosition -eq 100 ]
                 then
                         break
@@ -42,7 +41,6 @@ function checkWinningPosition(){
                 fi
         done
 }
-
 checkWinningPosition
 echo "position - $playerPosition"
 
